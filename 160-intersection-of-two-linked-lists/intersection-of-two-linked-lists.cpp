@@ -8,42 +8,20 @@
  */
 class Solution {
 public:
-    int getLength(ListNode* head) {
-        int len = 0;
-        while (head != NULL) {
-            len++;
-            head = head->next;
-        }
-        return len;
-    }
-
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        int lenA = getLength(headA);
-        int lenB = getLength(headB);
-
-        ListNode* temp1 = headA;
-        ListNode* temp2 = headB;
-
-        int diff = abs(lenA - lenB);
-
-        if (lenA > lenB) {
-            while (diff--) {
-                temp1 = temp1->next;
-            }
-        } else {
-            while (diff--) {
-                temp2 = temp2->next;
-            }
+        map<ListNode*,int>mpp;
+        ListNode* temp=headA;
+        while(temp!=NULL){
+            mpp[temp]=1;
+            temp=temp->next;
         }
-
-        while (temp1 != NULL && temp2 != NULL) {
-            if (temp1 == temp2) {
-                return temp1;
+        temp=headB;
+        while(temp!=NULL){
+            if(mpp.find(temp)!=mpp.end()){
+                return temp;
             }
-            temp1 = temp1->next;
-            temp2 = temp2->next;
+            temp=temp->next;
         }
-
         return NULL;
     }
 };
