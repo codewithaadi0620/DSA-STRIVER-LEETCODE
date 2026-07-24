@@ -4,18 +4,15 @@ public:
         int i=0; int j=height.size()-1;
         int ans=0;
         while(i<j){
-
-             int width=j-i;
-                int h=min(height[i],height[j]);
-                ans=max(ans,width*h);
-                if(height[i]<height[j]){
-                    i++;
-                }
-                else j--;
-        
+            int width=j-i;
+            int h=min(height[i],height[j]);
+            int area=width*h;
+            ans=max(ans,area);
+            if(height[i]<=height[j]){
+                i++;
+            }
+            else j--;
         }
-               
-        
-        return ans;
+        return (int) ans;
     }
 };
