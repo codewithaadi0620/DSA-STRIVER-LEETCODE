@@ -1,27 +1,19 @@
 class Solution {
 public:
-    vector<vector<int>>result;
-    set<int>st;
-    void solve(vector<int>&nums , vector<int>temp){
-        
-        for(int i=0; i<nums.size();i++){
-            if(temp.size()==nums.size()){
-                result.push_back(temp);
-                return ;
-            }
-            if(st.find(nums[i])==st.end()){
-                temp.push_back(nums[i]);
-                st.insert(nums[i]);
-                solve(nums,temp);
-                temp.pop_back();
-                st.erase(nums[i]);
-            }
+    vector<vector<int>> result;
+    void solve(int idx,vector<int> &nums){
+        if(idx==nums.size()){
+            result.push_back(nums);
+            return ;
         }
-
+        for(int i=idx;i<nums.size();i++){
+            swap(nums[i],nums[idx]);
+            solve(idx+1,nums);
+            swap(nums[i],nums[idx]);
+        }
     }
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<int> temp;
-        solve(nums,temp);
+        solve(0,nums);
         return result;
     }
 };
