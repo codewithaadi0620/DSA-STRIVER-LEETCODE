@@ -1,29 +1,18 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        int maxLength = 0;
-        int i = 0, j = 0;
-
-        set<char> valid;
-
-        while (j < s.size()) {
-
-            // Remove characters until s[j] is unique
-            while (valid.find(s[j]) != valid.end()) {
-                valid.erase(s[i]);
-                i++;
+        int l=0,r=0;
+        int maxi=0;
+        unordered_set<char>st;
+        while(r<s.size()){
+            while(st.find(s[r])!=st.end()){
+                st.erase(s[l]);
+                l++;
             }
-
-            // Add current character
-            valid.insert(s[j]);
-
-            // Update maximum window length
-            maxLength = max(maxLength, (int)valid.size());
-
-            // Expand window
-            j++;
+            st.insert(s[r]);
+            maxi=max(maxi,(int)st.size());
+            r++;
         }
-
-        return maxLength;
+        return maxi;
     }
 };
