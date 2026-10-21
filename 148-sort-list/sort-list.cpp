@@ -10,50 +10,42 @@
  */
 class Solution {
 public:
-    // Merge two sorted linked lists
     ListNode* merge(ListNode* l1, ListNode* l2) {
-        ListNode dummy(0);
-        ListNode* tail = &dummy;
-
+        ListNode* dummy = new ListNode(0);
+        ListNode* tail = dummy;
         while (l1 && l2) {
             if (l1->val <= l2->val) {
                 tail->next = l1;
+                tail = tail->next;
                 l1 = l1->next;
             } else {
                 tail->next = l2;
+                tail = tail->next;
                 l2 = l2->next;
             }
-            tail = tail->next;
+            if (l1) {
+                tail->next = l1;
+            }
+            if (l2) {
+                tail->next = l2;
+            }
         }
-
-        if (l1) tail->next = l1;
-        if (l2) tail->next = l2;
-
-        return dummy.next;
+        return dummy->next;
     }
-
     ListNode* sortList(ListNode* head) {
-        if (head == nullptr || head->next == nullptr)
+        if (head == NULL || head->next == NULL) {
             return head;
-
-        // Find middle
+        }
         ListNode* slow = head;
         ListNode* fast = head->next;
-
         while (fast && fast->next) {
             slow = slow->next;
             fast = fast->next->next;
         }
-
-        // Split into two halves
         ListNode* second = slow->next;
-        slow->next = nullptr;
-
-        // Recursively sort both halves
+        slow->next = NULL;
         ListNode* left = sortList(head);
         ListNode* right = sortList(second);
-
-        // Merge sorted halves
-        return merge(left, right);
+        return (merge(left, right));
     }
 };
